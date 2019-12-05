@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import Header from '../header';
 import Footer from '../footer';
+import FilterPanel from '../filter-panel';
+import SearchPanel from '../search-panel';
 
 import Service from '../services/service';
 
@@ -15,15 +17,50 @@ export default class OurCoffeePage extends Component {
 
     state = {
         itemList: null,
+        char: '',
+        filter: 'all'
     }
+
+    onUpdateFilter = this.onUpdateFilter.bind(this);
+    onUpdateSearch = this.onUpdateSearch.bind(this);
 
     componentDidMount() {
         this.service.getShopItems()
             .then((itemList) => {
                 this.setState({
-                    itemList
+                    itemList,
                 });
-            })
+            }) 
+    }
+
+    onUpdateSearch(char) {
+        this.setState({char}) 
+    }
+
+    onUpdateFilter(filter) {
+        this.setState({filter})
+    }
+
+    filterPost(items, filter) {
+        
+        if (filter === 'all') {
+            return items
+        }
+       else {
+            return items.filter((item) => item.country === filter)
+        } 
+    }
+
+    searchPost(items, char) {
+        if (char.length === 0) {
+            return items
+        }
+
+        return items.filter((item) => {
+            const itemNameTransform = item.name.toLowerCase();
+            const charTransform = char.toLowerCase();
+            return itemNameTransform.indexOf(charTransform) > -1
+        })
     }
 
     renderItems(arr) {
@@ -46,16 +83,16 @@ export default class OurCoffeePage extends Component {
     }
 
     render() {
-        const { itemList } = this.state;
+        const { itemList, char, filter } = this.state; 
+        const visiblePosts = this.filterPost(this.searchPost(itemList, char), filter);
 
         let content;
 
         if (!itemList) { 
             content = 1;
         } else { 
-            content = this.renderItems(itemList);
+            content = this.renderItems(visiblePosts);
         }
-
 
         return (
             <>
@@ -92,22 +129,13 @@ export default class OurCoffeePage extends Component {
                         <div className="line"></div>
                         <div className="row">
                             <div className="col-lg-4 offset-2">
-                                <form action="#" className="shop__search">
-                                    <label className="shop__search-label" htmlFor="filter">Looking for</label>
-                                    <input id="filter" type="text" placeholder="start typing here..." className="shop__search-input" />
-                                </form>
+                            <SearchPanel 
+                            onUpdateSearch={this.onUpdateSearch}/>
                             </div>
                             <div className="col-lg-4">
-                                <div className="shop__filter">
-                                    <div className="shop__filter-label">
-                                        Or filter
-                        </div>
-                                    <div className="shop__filter-group">
-                                        <button className="shop__filter-btn">Brazil</button>
-                                        <button className="shop__filter-btn">Kenya</button>
-                                        <button className="shop__filter-btn">Columbia</button>
-                                    </div>
-                                </div>
+                            <FilterPanel 
+                            filter={filter}
+                            onUpdateFilter={this.onUpdateFilter}/>
                             </div>
                         </div>
                         <div className="row">
