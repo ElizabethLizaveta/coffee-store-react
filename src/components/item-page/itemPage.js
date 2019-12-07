@@ -2,18 +2,36 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import Footer from '../footer';
-
+import Spinner from '../spinner';
+import ErrorMessage from '../errorMessage';
 
 import Service from '../services/service';
 
 import './coffeepage.sass';
 
 export default class ItemPage extends Component {
-   
+
     service = new Service();
 
     state = {
         item: null,
+        error: false,
+        loading: true,
+    }
+
+    onLoaded(item) {
+        this.setState({
+            item,
+            error: false,
+            loading: false
+        })
+    }
+
+    onError() {
+        this.setState({
+            error: true,
+            loading: false
+        })
     }
 
     componentDidMount() {
@@ -26,29 +44,59 @@ export default class ItemPage extends Component {
         }
     }
 
+    componentDidCatch() {
+        this.onError();
+    }
+
     updateChar() {
         const { itemName } = this.props;
-        
+
         if (!itemName) {
             return;
         }
 
         this.service.getShopItem(itemName)
-            .then((item) => { 
-                this.setState({ item })
+            .then((item) => {
+                this.onLoaded(item)
             })
+            .catch(this.onError);
+            this.foo.bar = 0;
     }
 
     render() {
 
-        if (!this.state.item) {
-            return (
-                <span>Error</span>
-            )
-        }
+        const { item, error, loading } = this.state;
+        let content; 
 
-        const { item } = this.state;
-        const { url, price, country, description } = item;
+        if (error) {
+            content = <ErrorMessage/>
+        } else if (loading) {
+            content = <Spinner/>
+        } else {
+            const { url, price, country, description } = item;
+
+            content = <div className="row">
+                <div className="col-lg-5 offset-1">
+                    <img className="shop__girl" src={url} alt="coffee_item" />
+                </div>
+                <div className="col-lg-4">
+                    <div className="title">About it</div>
+                    <img className="beanslogo" src="../../logo/Beans_logo_dark.svg" alt="Beans logo" />
+                    <div className="shop__point">
+                        <span>Country: </span>
+                        {country}
+                    </div>
+                    <div className="shop__point">
+                        <span>Description: </span>
+                        {description}
+                    </div>
+                    <div className="shop__point">
+                        <span>Price: </span>
+                        <span className="shop__point-price">{price}</span>
+                    </div>
+                </div>
+            </div>
+        }
 
         return (
             <>
@@ -64,27 +112,7 @@ export default class ItemPage extends Component {
                 </div>
                 <section className="shop">
                     <div className="container">
-                        <div className="row">
-                            <div className="col-lg-5 offset-1">
-                                <img className="shop__girl" src={url} alt="coffee_item" />
-                            </div>
-                            <div className="col-lg-4">
-                                <div className="title">About it</div>
-                                <img className="beanslogo" src="../../logo/Beans_logo_dark.svg" alt="Beans logo" />
-                                <div className="shop__point">
-                                    <span>Country: </span>
-                                    {country}
-                    </div>
-                                <div className="shop__point">
-                                    <span>Description: </span>
-                                    {description}
-                    </div>
-                                <div className="shop__point">
-                                    <span>Price: </span>
-                                    <span className="shop__point-price">{price}</span>
-                                </div>
-                            </div>
-                        </div>
+                        {content}
                     </div>
                 </section>
                 <Footer />

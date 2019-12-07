@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import Footer from '../footer';
+import Spinner from '../spinner';
+import ErrorMessage from '../errorMessage/';
 
 import Service from '../services/service';
 
@@ -14,15 +16,31 @@ export default class PleasurePage extends Component {
 
     state = {
         itemList: null,
+        error: false,
+        loading: true,
+    }
+
+    onLoaded(itemList) {
+        this.setState({
+            itemList,
+            error: false,
+            loading: false
+        })
+    }
+
+    onError() {
+        this.setState({
+            error: true,
+            loading: false
+        })
     }
 
     componentDidMount() {
         this.service.getGoods()
             .then((itemList) => {
-                this.setState({
-                    itemList
-                });
+               this.onLoaded(itemList)
             })
+            .catch(this.onError)
     }
 
     renderItems(arr) {
@@ -43,12 +61,14 @@ export default class PleasurePage extends Component {
 
     render() {
 
-        const { itemList } = this.state;
+        const { itemList, loading, error } = this.state;
 
         let content;
 
-        if (!itemList) { 
-            content = 1;
+        if (loading) { 
+            content = <Spinner/>
+        } else if (error) {
+            content = <ErrorMessage/>
         } else { 
             content = this.renderItems(itemList);
         }

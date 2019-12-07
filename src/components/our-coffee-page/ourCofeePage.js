@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 
 import Header from '../header';
 import Footer from '../footer';
+import Spinner from '../spinner';
 import FilterPanel from '../filter-panel';
 import SearchPanel from '../search-panel';
 
 import Service from '../services/service';
 
 import './coffeePage.sass';
+import ErrorMessage from '../errorMessage';
 
 
 export default class OurCoffeePage extends Component {
@@ -17,6 +19,8 @@ export default class OurCoffeePage extends Component {
 
     state = {
         itemList: null,
+        error: false,
+        loading: true,
         char: '',
         filter: 'all'
     }
@@ -24,13 +28,27 @@ export default class OurCoffeePage extends Component {
     onUpdateFilter = this.onUpdateFilter.bind(this);
     onUpdateSearch = this.onUpdateSearch.bind(this);
 
+    onLoaded(itemList) {
+        this.setState({
+            itemList,
+            error: false,
+            loading: false
+        })
+    }
+
+    onError() {
+        this.setState({
+            error: true,
+            loading: false
+        })
+    }
+
     componentDidMount() {
         this.service.getShopItems()
             .then((itemList) => {
-                this.setState({
-                    itemList,
-                });
+                this.onLoaded(itemList)
             }) 
+            .catch(this.onError)
     }
 
     onUpdateSearch(char) {
@@ -83,13 +101,15 @@ export default class OurCoffeePage extends Component {
     }
 
     render() {
-        const { itemList, char, filter } = this.state; 
+        const { itemList, loading, error, char, filter } = this.state; 
         const visiblePosts = this.filterPost(this.searchPost(itemList, char), filter);
 
         let content;
 
-        if (!itemList) { 
-            content = 1;
+        if (loading) { 
+            content = <Spinner/>
+        } else if (error) {
+            content = <ErrorMessage/>
         } else { 
             content = this.renderItems(visiblePosts);
         }

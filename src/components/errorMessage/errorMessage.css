@@ -1,0 +1,16 @@
+.error-wrap {
+    margin: 60px auto 0;
+}
+
+.error-img {
+    width: auto;
+    margin: 0 auto 10px;
+    display: block;
+    height: auto;
+    max-width: 300px; 
+}
+
+.error-text {
+    color: #000;
+    text-align: center;
+}

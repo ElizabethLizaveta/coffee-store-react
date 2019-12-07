@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import Header from '../header';
 import Footer from '../footer';
+import Spinner from '../spinner';
+import ErrorMessage from '../errorMessage';
 
 import Service from '../services/service';
 
@@ -15,16 +17,31 @@ export default class CoffeeHousePage extends Component {
     
     state = {
         itemList: null,
+        error: false,
+        loading: true,
     }
 
+    onLoaded(itemList) {
+        this.setState({
+            itemList,
+            error: false,
+            loading: false
+        })
+    }
+
+    onError() {
+        this.setState({
+            error: true,
+            loading: false
+        })
+    }
 
     componentDidMount() { 
         this.service.getBestsellers()
-            .then((itemList) => {
-                this.setState({
-                    itemList
-                });
-            })
+        .then((itemList) => {
+            this.onLoaded(itemList)
+         })
+         .catch(this.onError)
     }
 
 
@@ -46,17 +63,18 @@ export default class CoffeeHousePage extends Component {
     }
 
     render() {
-        const { itemList } = this.state;
+        const { itemList, loading, error } = this.state;
         
         let  content;
 
-        if (!itemList) {
-            content = 1;
+        if (loading) {
+            content = <Spinner/>
+        } else if  (error) {
+            content = <ErrorMessage/>
         } else {
             content = this.renderItems(itemList);
         }
       
-
         return ( 
             <>
     <div className="preview">
