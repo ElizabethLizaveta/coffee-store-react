@@ -1,9 +1,19 @@
 .banner-coffee
     height: 260px
-    background: url('../../img/Coffee_bg.jpg') center center no-repeat
+    background: url('../../img/Kaizen-Coffee-Shop-interior-design-by-spacecraft-lighting.jpg') center center no-repeat
     background-size: cover
+    position: relative !important
+    &:before 
+        content: ''
+        display: block
+        width: 100%
+        height: 100%
+        background: rgba(#000, 0.6)
+        position: absolute
     .title-big
         margin-top: 60px
+        z-index: 1
+        position: relative
 .shop
     padding: 70px 0 40px 0
     .title
@@ -62,8 +72,12 @@
         border-radius: 8px
         box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25)
         transition: 0.3s all
+        text-decoration: none
         &:hover
-            box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.25)
+            cursor: pointer
+            background: rgba(255, 255, 255, 1)
+            text-decoration: none
+            color: #000
         img 
             display: block 
             margin: 0 auto

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Header from '../header';
 import Footer from '../footer';
 import Spinner from '../spinner';
-import ErrorMessage from '../errorMessage/';
+import ErrorMessage from '../errorMessage';
 
 import Service from '../services/service';
 
@@ -48,12 +48,12 @@ export default class PleasurePage extends Component {
             const id = i;
             const { name, url, price } = item; 
             return (
-                  <div className="shop__item" key={id}>
+                  <div className="coffee__item" key={id}>
                    <img src={url} alt="coffee" />
-                    <div className="shop__item-title">
+                    <div className="coffee__item-title">
                         {name}
                     </div>
-                    <div className="shop__item-price">{price}</div>
+                    <div className="coffee__item-price">{price}</div>
               </div>
             )
         })
@@ -85,16 +85,16 @@ export default class PleasurePage extends Component {
             <h1 className="title-big">For your pleasure</h1>
         </div>
     </div>
-    <section className="shop">
+    <section className="coffee">
         <div className="container">
             <div className="row">
                 <div className="col-lg-4 offset-2">
-                    <img className="shop__girl" src="../../img/pleasure.png" alt="girl"/>
+                    <img className="coffee__girl" src="../../img/Kaizen-Coffee-Shop.jpg" alt="girl"/>
                 </div>
                 <div className="col-lg-4">
                     <div className="title">About our goods</div>
                     <img className="beanslogo" src="../../logo/Beans_logo_dark.svg" alt="Beans logo"/>
-                    <div className="shop__text">
+                    <div className="coffee__text">
                         Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible.
                         <br/><br/>
                         Afraid at highly months do things on at. Situation recommend objection do intention<br/>
@@ -108,7 +108,7 @@ export default class PleasurePage extends Component {
             <div className="line"></div>
             <div className="row">
                 <div className="col-lg-10 offset-lg-1">
-                    <div className="shop__wrapper">
+                    <div className="coffee__wrapper">
                         {content}
                     </div>
                 </div>

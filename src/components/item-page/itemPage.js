@@ -60,7 +60,6 @@ export default class ItemPage extends Component {
                 this.onLoaded(item)
             })
             .catch(this.onError);
-            this.foo.bar = 0;
     }
 
     render() {

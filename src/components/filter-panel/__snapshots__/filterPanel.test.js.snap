@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing <FilterPanel/> FilterPanel have rendered correctly 1`] = `
+<div
+  className="shop__filter"
+>
+  <div
+    className="shop__filter-label"
+  >
+    Or filter
+  </div>
+  <div
+    className="shop__filter-group"
+  >
+    <button
+      className="shop__filter-btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Brazil
+    </button>
+    <button
+      className="shop__filter-btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Kenya
+    </button>
+    <button
+      className="shop__filter-btn"
+      onClick={[Function]}
+      type="button"
+    >
+      Columbia
+    </button>
+  </div>
+</div>
+`;

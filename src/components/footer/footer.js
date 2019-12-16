@@ -14,7 +14,7 @@ export default class Footer extends Component {
                 <div className="col-lg-5 offset-lg-4">
                     <ul className="footer">
                     <li className="footer__item">
-                            <Link to="/"><img src="../../logo/Logo_black.svg" alt="logo"/></Link>
+                            <Link to="/">Coffee house</Link>
                             </li>
                             <li className="footer__item">
                             <Link to="/our-coffee/">Our coffee</Link>

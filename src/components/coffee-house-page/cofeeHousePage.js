@@ -51,7 +51,7 @@ export default class CoffeeHousePage extends Component {
             const {name, url, price} = item;
             const routerLink = `/coffee-item/:${name}`;
             return (
-                         <Link key={id} className="best__item" to={routerLink}>
+                    <Link key={id} className="best__item" to={routerLink}>
                          <img src={url} alt="coffee"/>
                          <div className="best__item-title">
                              {name}
@@ -90,7 +90,7 @@ export default class CoffeeHousePage extends Component {
                     <img className="beanslogo" src="../../logo/Beans_logo.svg" alt="Beans logo"/>
                     <div className="preview__subtitle">We makes every day full of energy and taste</div>
                     <div className="preview__subtitle">Want to try our beans?</div>
-                    <Link className="preview__btn" to="/our-coffee/">More</Link>
+                    <Link className="preview__btn" to="/our-coffee/">MORE</Link>
                </div>
            </div>
        </div>

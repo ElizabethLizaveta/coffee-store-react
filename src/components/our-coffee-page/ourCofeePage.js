@@ -9,7 +9,7 @@ import SearchPanel from '../search-panel';
 
 import Service from '../services/service';
 
-import './coffeePage.sass';
+import './ourCoffeePage.sass';
 import ErrorMessage from '../errorMessage';
 
 
@@ -130,7 +130,7 @@ export default class OurCoffeePage extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-4 offset-2">
-                                <img className="shop__girl" src="../../img/coffee_girl.jpg" alt="girl" />
+                                <img className="shop__girl" src="../../img/Kaizen-Coffee-Shop-interior-design-by-spacecraft-design.jpg" alt="girl" />
                             </div>
                             <div className="col-lg-4">
                                 <div className="title">About our beans</div>

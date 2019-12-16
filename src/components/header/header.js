@@ -12,7 +12,7 @@ export default class Header extends Component {
                     <header>
                         <ul className="header">
                             <li className="header__item">
-                            <Link to="/"><img src="../../logo/Logo.svg" alt="logo"/></Link>
+                            <Link to="/">Coffee house</Link>
                             </li>
                             <li className="header__item">
                             <Link to="/our-coffee/">Our coffee</Link>
